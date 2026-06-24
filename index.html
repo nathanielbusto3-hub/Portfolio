@@ -1,0 +1,3120 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth snap-y snap-mandatory" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script>
+        document.documentElement.setAttribute('data-theme', 'dark');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <link rel="icon" type="image/png" href="n.png">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@800&family=Inter:wght@300;400;600&family=Caveat:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bw-bg: #ffffff;
+            --bw-bg-soft: #f6f6f6;
+            --bw-surface: rgba(255, 255, 255, 0.86);
+            --bw-surface-2: rgba(255, 255, 255, 0.65);
+            --bw-text: #000000;
+            --bw-text-muted: rgba(10, 10, 13, 0.62);
+            --bw-border: rgba(10, 10, 13, 0.10);
+            --bw-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --bw-accent: #0b0b0d;
+            --bw-accent-soft: rgba(0, 0, 0, 0.08);
+            --bw-focus: rgba(0, 0, 0, 0.18);
+        }
+
+        [data-theme="dark"]:root {
+
+            --bw-bg: #000000;
+            --bw-bg-soft: #000000;
+            --bw-surface: rgba(0, 0, 0, 0.95);
+            --bw-surface-2: rgba(0, 0, 0, 0.85);
+            --bw-text: #ffffff;
+            --bw-text-muted: rgba(255, 255, 255, 0.7);
+            --bw-border: rgba(255, 255, 255, 0.15);
+            --bw-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            --bw-accent: #ffffff;
+            --bw-accent-soft: rgba(255, 255, 255, 0.15);
+            --bw-focus: rgba(255, 255, 255, 0.25);
+        }
+
+        body {
+            background-color: var(--bw-bg);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.8s ease-in-out;
+            color: var(--bw-text);
+        }
+
+        .vignette {
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] .vignette {
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.45);
+        }
+
+        .glass {
+            background: var(--bw-surface);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--bw-border);
+            box-shadow: var(--bw-shadow);
+            transition: box-shadow 0.3s ease, background 0.8s ease, background-color 0.8s ease;
+        }
+
+        [data-theme="dark"] .glass {
+            box-shadow: var(--bw-shadow);
+        }
+
+        .font-heading,
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--bw-text);
+        }
+
+        .text-amber-800,
+        .text-amber-900,
+        .text-amber-950,
+        .text-amber-900\/60,
+        .text-amber-900\/70,
+        .text-amber-900\/80,
+        .text-amber-900\/50,
+        .text-amber-900\/40,
+        .text-amber-900\/60 {
+            color: var(--bw-text) !important;
+        }
+
+        .text-amber-900\/70,
+        .text-amber-900\/80 {
+            color: var(--bw-text-muted) !important;
+        }
+
+        .text-blue-600,
+        .text-stone-600,
+        .text-amber-600 {
+            color: var(--bw-text) !important;
+        }
+
+        #home,
+        #projects,
+        #skills,
+        #testimonials,
+        #stats {
+            background-color: var(--bw-bg) !important;
+        }
+
+        #about,
+        #services,
+        #skills,
+        #timeline,
+        #blog,
+        #contact,
+        #projects {
+            background-color: var(--bw-bg-soft) !important;
+        }
+
+        .bg-amber-800,
+        .bg-amber-900,
+        .bg-amber-800\/10,
+        .bg-amber-900\/5,
+        .bg-amber-900\/10,
+        .bg-white\/50,
+        .bg-white\/20,
+        .bg-white\/30 {
+            background-color: rgba(0, 0, 0, 0.06) !important;
+        }
+
+        [data-theme="dark"] .bg-amber-800,
+        [data-theme="dark"] .bg-amber-900,
+        [data-theme="dark"] .bg-amber-800\/10,
+        [data-theme="dark"] .bg-amber-900\/5,
+        [data-theme="dark"] .bg-amber-900\/10,
+        [data-theme="dark"] .bg-white\/50,
+        [data-theme="dark"] .bg-white\/20,
+        [data-theme="dark"] .bg-white\/30 {
+            background-color: rgba(244, 244, 246, 0.08) !important;
+        }
+
+        .border-amber-900\/10,
+        .border-amber-900\/5,
+        .border-amber-800,
+        .border-amber-800\/10,
+        .border-amber-900\/20 {
+            border-color: var(--bw-border) !important;
+        }
+
+        .border-gray-100 {
+            border-color: var(--bw-border) !important;
+        }
+
+        #scroll-progress {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.15)) !important;
+        }
+
+        [data-theme="dark"] #scroll-progress {
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2)) !important;
+        }
+
+        .film-grain {
+            opacity: 0.012;
+            animation: grain 0.9s steps(6) infinite;
+        }
+
+        .custom-cursor {
+            background: rgba(0, 0, 0, 0.12);
+            border: 2px solid rgba(0, 0, 0, 0.35);
+        }
+
+        .custom-cursor.cursor-hover {
+            background: rgba(0, 0, 0, 0.08);
+            border: 2px solid rgba(0, 0, 0, 0.45);
+        }
+
+        [data-theme="dark"] .custom-cursor {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        [data-theme="dark"] .custom-cursor.cursor-hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 100px rgba(62, 39, 35, 0.08);
+            pointer-events: none;
+            z-index: 1001;
+            transition: box-shadow 0.8s ease;
+        }
+
+        .film-grain {
+            position: fixed;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 2000;
+            animation: grain 0.6s steps(6) infinite;
+        }
+
+        @keyframes grain {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            20% {
+                transform: translate(-5%, -10%);
+            }
+
+            40% {
+                transform: translate(-15%, 5%);
+            }
+
+            60% {
+                transform: translate(7%, -25%);
+            }
+
+            80% {
+                transform: translate(-5%, 25%);
+            }
+        }
+
+        .font-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-logo-ja {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        .torn-edge {
+            position: relative;
+        }
+
+        .torn-edge::after {
+            display: none;
+        }
+
+        .scrap-paper {
+            background: #fffaf0;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease, background 0.8s ease, background-color 0.8s ease;
+        }
+
+        .glare {
+
+            background: radial-gradient(circle at var(--x) var(--y), rgba(255, 255, 255, 0.2) 0%, transparent 80%);
+            mix-blend-mode: overlay;
+        }
+
+        .tilt-card {
+            transform-style: flat;
+            transition: none;
+        }
+
+        .paper-card {
+            background: #fffaf0;
+            border: 1px solid #d7ccc8;
+            position: relative;
+        }
+
+        .custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: #8d6e63;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .custom-cursor.cursor-hover {
+            width: 30px;
+            height: 30px;
+            background: rgba(141, 110, 99, 0.2);
+            border: 2px solid #8d6e63;
+        }
+
+        .trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(141, 110, 99, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        .trail.fade {
+            transform: translate(-50%, -50%) scale(0.1);
+            opacity: 0;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                text-shadow: none;
+            }
+        }
+
+        .animate-glow {
+            animation: none;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-gradient-text {
+            background: linear-gradient(90deg, #5d4037, #8d6e63, #a1887f, #5d4037);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-shift 6s ease infinite;
+        }
+
+        @keyframes pulse-soft {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .hover-pulse:hover {
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+
+        @keyframes nav-down {
+            0% {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-nav {
+            animation: nav-down 1s ease-out forwards;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #8d6e63;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        nav.scrolled {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        @keyframes float-random {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30px, -50px);
+            }
+
+            66% {
+                transform: translate(-20px, 20px);
+            }
+        }
+
+        .animate-float-random {
+            animation: float-random 20s ease-in-out infinite;
+        }
+
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-image-fade-in {
+            opacity: 0;
+            animation: heroFadeIn 1.5s ease-out forwards;
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        #menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .skills-marquee {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .marquee-row {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .marquee-track {
+            display: flex;
+            flex-shrink: 0;
+            gap: 3rem;
+            padding-right: 3rem;
+        }
+
+        .marquee-row.to-left .marquee-track {
+            animation: scroll-left 25s linear infinite;
+        }
+
+        .marquee-row.to-right .marquee-track {
+            animation: scroll-right 20s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes scroll-right {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .skill-icon {
+            transition: transform 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .skill-icon:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes profile-glow {
+
+            0%,
+            100% {
+                border-color: #d4a574;
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+        }
+
+        .animate-profile-glow {
+            animation: none;
+            border-width: 3px;
+            border-style: solid;
+            border-color: #d4a574;
+        }
+
+        @keyframes id-swing {
+
+            0%,
+            100% {
+                transform: rotate(-1.5deg);
+            }
+
+            50% {
+                transform: rotate(1.5deg);
+            }
+        }
+
+        .animate-id-swing {
+            transform-origin: top center;
+            animation: id-swing 6s ease-in-out infinite;
+        }
+
+        .holographic-overlay {
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.1) 25%, rgba(0, 255, 255, 0.2) 45%, rgba(255, 0, 255, 0.2) 50%, rgba(255, 255, 0, 0.2) 55%, rgba(255, 255, 255, 0.1) 75%, transparent 100%);
+            background-size: 250% 250%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes holo-move {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        .lace-texture {
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 2px, transparent 2px, transparent 4px);
+        }
+
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        .spring-transition {
+            transition: height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+                margin-top 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+
+        .success-stamp {
+            transform: rotate(-12deg) scale(2);
+            opacity: 0;
+            color: #1b4332;
+            border: 5px double #1b4332;
+            background: transparent;
+            mask-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            -webkit-mask-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            filter: blur(0.3px) contrast(1.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .success-stamp.show {
+            transform: rotate(-12deg) scale(1);
+            opacity: 1;
+        }
+
+        @keyframes polaroid-flash {
+            0% {
+                filter: brightness(1) contrast(1);
+            }
+
+            40% {
+                filter: brightness(1.8) contrast(1.2);
+                box-shadow: 0 0 50px rgba(255, 255, 255, 0.8);
+            }
+
+            100% {
+                filter: brightness(1) contrast(1);
+            }
+        }
+
+        .animate-flash {
+            animation: polaroid-flash 0.4s ease-out;
+        }
+
+        .polaroid-card {
+            background: white;
+            padding: 0.75rem;
+            padding-bottom: 2.5rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .project-img {
+            filter: none;
+            transition: transform 0.5s ease;
+        }
+
+        .group:hover .project-img,
+        .polaroid-card:hover .project-img {
+            filter: none;
+        }
+
+        #success-message {
+            display: none;
+        }
+
+        [data-theme="dark"] body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .vignette {
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .glass {
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        [data-theme="dark"] .paper-card {
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="dark"] .polaroid-card {
+            background: #000000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+        }
+
+        [data-theme="dark"] #home {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #about {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #about .rounded-2xl.overflow-hidden {
+            border-color: rgba(255, 255, 255, 0.3) !important;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+        }
+
+        [data-theme="dark"] #about .rounded-xl.bg-amber-900\/5 {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        [data-theme="dark"] #about .rounded-full.bg-amber-900\/5 {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        [data-theme="dark"] #services {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #skills {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #blog {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #testimonials {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #projects {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #contact {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #stats {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] #timeline {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] .nav-link {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .nav-link:hover {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .nav-link::after {
+            background: linear-gradient(90deg, #cccccc, #aaaaaa);
+        }
+
+        [data-theme="dark"] .animate-gradient-text {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .text-amber-800,
+        [data-theme="dark"] .text-amber-900,
+        [data-theme="dark"] .text-amber-950 {
+            color: #dddddd !important;
+        }
+
+        [data-theme="dark"] .text-amber-900\/80,
+        [data-theme="dark"] .text-amber-900\/70 {
+            color: rgba(221, 221, 221, 0.75) !important;
+        }
+
+        [data-theme="dark"] .text-amber-900\/60 {
+            color: rgba(221, 221, 221, 0.6) !important;
+        }
+
+        [data-theme="dark"] .text-amber-800\/60 {
+            color: rgba(200, 200, 200, 0.6) !important;
+        }
+
+        [data-theme="dark"] .text-amber-600 {
+            color: #cccccc !important;
+        }
+
+        [data-theme="dark"] .bg-amber-800 {
+            background-color: #666666 !important;
+        }
+
+        [data-theme="dark"] .bg-amber-800\/10 {
+            background-color: rgba(102, 102, 102, 0.15) !important;
+        }
+
+        [data-theme="dark"] .bg-amber-900\/5 {
+            background-color: rgba(200, 200, 200, 0.08) !important;
+        }
+
+        [data-theme="dark"] .border-amber-900\/10 {
+            border-color: rgba(200, 200, 200, 0.15) !important;
+        }
+
+        [data-theme="dark"] .border-amber-900\/5 {
+            border-color: rgba(200, 200, 200, 0.08) !important;
+        }
+
+        [data-theme="dark"] #scroll-progress {
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+        }
+
+        [data-theme="dark"] .scrap-paper {
+            background-image: none;
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] .success-stamp {
+            color: #cccccc;
+            border-color: #cccccc;
+        }
+
+        [data-theme="dark"] .success-stamp.show {
+            color: #cccccc;
+            border-color: #cccccc;
+        }
+
+        [data-theme="dark"] input,
+        [data-theme="dark"] textarea {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] input::placeholder,
+        [data-theme="dark"] textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        [data-theme="dark"] footer {
+            background-color: #000000 !important;
+
+            border-color: rgba(255, 255, 255, 0.1) !important;
+
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .custom-cursor {
+            background: #cccccc;
+            border: none;
+        }
+
+        [data-theme="dark"] .custom-cursor.cursor-hover {
+            background: rgba(200, 200, 200, 0.2);
+            border: 2px solid #cccccc;
+        }
+
+        [data-theme="dark"] .trail {
+            background: rgba(200, 200, 200, 0.4);
+        }
+
+        [data-theme="dark"] #scroll-to-top {
+            background-color: #666666;
+        }
+
+        [data-theme="dark"] #scroll-to-top:hover {
+            background-color: #888888;
+        }
+
+        [data-theme="dark"] #mobile-menu {
+            border-left: 1px solid rgba(200, 200, 200, 0.1);
+        }
+
+        [data-theme="dark"] .mobile-nav-link {
+            color: #dddddd !important;
+        }
+
+        .theme-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(141, 110, 99, 0.1);
+            border: 1px solid rgba(141, 110, 99, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(141, 110, 99, 0.2);
+            transform: rotate(15deg);
+        }
+
+        [data-theme="dark"] .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="dark"] .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        [data-theme="dark"] #blogModal .modal-content-box {
+            background-color: #000000 !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="dark"] #blogModal .modal-close-btn {
+            color: #ffffff !important;
+            background-color: #333333 !important;
+        }
+
+        [data-theme="dark"] #blogModal .modal-close-btn:hover {
+            color: #000000 !important;
+            background-color: #f0f0f0 !important;
+        }
+
+        [data-theme="dark"] #blogModalTitle {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] #blogModalMeta {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        [data-theme="dark"] #blogModalContent {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        [data-theme="dark"] #blogModalContent p {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        [data-theme="dark"] .glass:hover {
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        [data-theme="dark"] section {
+            background: transparent !important;
+        }
+
+        [data-theme="dark"] section,
+        [data-theme="dark"] footer {
+            color: #f4f4f6 !important;
+        }
+
+        [data-theme="dark"] .bg-white {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] [class*="bg-\[#f9f7f4\]"] {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] .bg-white\/50 {
+            background-color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        [data-theme="dark"] .bg-white\/20 {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+
+        [data-theme="dark"] .glass {
+            background: rgba(0, 0, 0, 0.95) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+
+        [data-theme="dark"] footer {
+            background-color: #000000 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        [data-theme="dark"] .scrap-paper {
+            background: #000000 !important;
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] a,
+        [data-theme="dark"] button {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] a:hover,
+        [data-theme="dark"] button:hover {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] #services .glass,
+        [data-theme="dark"] #skills .glass,
+        [data-theme="dark"] #testimonials .glass,
+        [data-theme="dark"] #projects .polaroid-card,
+        [data-theme="dark"] #blog .glass,
+        [data-theme="dark"] #contact .glass,
+        [data-theme="dark"] #timeline .glass {
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        [data-theme="dark"] #contact .scrap-paper {
+            background-image: none;
+            background-color: #000000;
+        }
+
+        [data-theme="dark"] .border-amber-800 {
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        [data-theme="dark"] .text-amber-900\/50 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .bg-amber-800\/20 {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        [data-theme="dark"] .border-amber-900\/10 {
+            border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        [data-theme="dark"] .focus\:ring-amber-800\/20:focus {
+            --tw-ring-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        [data-theme="dark"] .text-amber-800\/20 {
+            color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        [data-theme="dark"] .group-hover\:bg-amber-950\/60:hover {
+            background-color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        [data-theme="dark"] .bg-white\/50 {
+            background-color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #faf8f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #page-loader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #page-loader .loader-ring {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(141, 110, 99, 0.2);
+            border-top-color: #8d6e63;
+            border-radius: 50%;
+            animation: loader-spin 0.8s linear infinite;
+        }
+
+        #page-loader .loader-text {
+            margin-top: 16px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            animation: loader-pulse 1.5s ease-in-out infinite;
+            color: #000000 !important;
+        }
+
+        [data-theme="dark"] #page-loader {
+            background: #000000;
+        }
+
+        [data-theme="dark"] #page-loader .loader-ring {
+            border-color: rgba(255, 255, 255, 0.2);
+            border-top-color: #ffffff;
+        }
+
+        [data-theme="dark"] #page-loader .loader-text {
+            color: #ffffff !important;
+        }
+
+        @keyframes loader-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes loader-pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        #particles-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .text-reveal {
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .text-reveal span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+        }
+
+        .text-reveal.revealed span {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 99998;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .toast {
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: rgba(141, 110, 99, 0.95);
+            color: #fff;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            pointer-events: auto;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        [data-theme="dark"] .toast {
+            background: rgba(0, 0, 0, 0.95);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #8d6e63 10%, #8d6e63 90%, transparent);
+            transform: translateX(-50%);
+        }
+
+        [data-theme="dark"] .timeline-line {
+            background: linear-gradient(to bottom, transparent, #ffffff 10%, #ffffff 90%, transparent);
+        }
+
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #8d6e63;
+            border: 3px solid #FDFAF5;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        [data-theme="dark"] .timeline-dot {
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        .tech-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: rgba(62, 39, 35, 0.95);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .tech-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(62, 39, 35, 0.95);
+        }
+
+        .tech-item-wrap:hover .tech-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-4px);
+        }
+
+        [data-theme="dark"] .tech-tooltip {
+            background: rgba(255, 255, 255, 0.95);
+            color: #000000;
+        }
+
+        [data-theme="dark"] .tech-tooltip::after {
+            border-top-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .status-pulse {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: status-blink 2s ease-in-out infinite;
+        }
+
+        @keyframes status-blink {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+            }
+        }
+
+        @keyframes status-blink-dark {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+            }
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .filter-tab:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-tab.active {
+            background: #8d6e63;
+            color: #fff;
+            border-color: #8d6e63;
+        }
+
+        [data-theme="dark"] .filter-tab {
+            color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        [data-theme="dark"] .filter-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .filter-tab.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .project-item {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #easter-egg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #easter-egg-overlay.active {
+            opacity: 1;
+        }
+
+        #easter-egg-overlay .ee-text {
+            font-size: 4rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            background: linear-gradient(90deg, #f5c77e, #ff6b6b, #48dbfb, #f5c77e);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: ee-gradient 2s linear infinite;
+        }
+
+        @keyframes ee-gradient {
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        .tap-pulse {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(141, 110, 99, 0.3);
+            pointer-events: none;
+            z-index: 99997;
+            transform: translate(-50%, -50%) scale(0);
+            animation: tap-ring 0.5s ease-out forwards;
+        }
+
+        [data-theme="dark"] .tap-pulse {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes tap-ring {
+            to {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        .sound-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+
+        .input-error {
+            border-color: #ef4444 !important;
+        }
+
+        .input-success {
+            border-color: #22c55e !important;
+        }
+
+        .validation-msg {
+            font-size: 0.7rem;
+            margin-top: 2px;
+            min-height: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #contact-form .form-input::placeholder {
+            color: #000;
+        }
+
+        [data-theme="dark"] .stat-number {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .stat-item .text-amber-900\/60 {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        [data-theme="dark"] .glass.rounded-2xl.p-6 h4 {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .glass.rounded-2xl.p-6 p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="dark"] .glass.rounded-2xl.p-6 span {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        [data-theme="dark"] .status-pulse+div span {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        [data-theme="dark"] .status-pulse+div p {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .text-reveal span {
+            color: inherit;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            color: #0b0b0d !important;
+        }
+
+        #page-loader,
+        #page-loader * {
+            color: #0b0b0d !important;
+        }
+
+        section,
+        footer {
+            background-color: #ffffff !important;
+            color: #0b0b0d !important;
+        }
+
+        i,
+        svg,
+        span,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        label,
+        a,
+        button,
+        input,
+        textarea {
+            color: var(--bw-text) !important;
+        }
+
+        i,
+        svg {
+            fill: currentColor !important;
+            color: #000000 !important;
+        }
+
+        a:hover,
+        button:hover {
+            color: #000000 !important;
+        }
+
+        #hire-me-btn {
+            color: #000000 !important;
+        }
+
+        #hire-me-btn:hover {
+            color: #000000 !important;
+        }
+
+        .magnetic-btn,
+        .magnetic-btn span {
+            color: #000000 !important;
+        }
+
+        .magnetic-btn:hover {
+            color: #000000 !important;
+        }
+
+        [data-theme="dark"] body {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] section,
+        [data-theme="dark"] footer {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] i,
+        [data-theme="dark"] svg {
+            color: #ffffff !important;
+            fill: #ffffff !important;
+        }
+
+        [data-theme="dark"] i,
+        [data-theme="dark"] span,
+        [data-theme="dark"] p,
+        [data-theme="dark"] h1,
+        [data-theme="dark"] h2,
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4,
+        [data-theme="dark"] h5,
+        [data-theme="dark"] h6,
+        [data-theme="dark"] label,
+        [data-theme="dark"] a,
+        [data-theme="dark"] button,
+        [data-theme="dark"] input,
+        [data-theme="dark"] textarea {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] a:hover,
+        [data-theme="dark"] button:hover {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] button:hover,
+        [data-theme="dark"] a.button:hover,
+        [data-theme="dark"] [role="button"]:hover,
+        [data-theme="dark"] .magnetic-btn:hover,
+        [data-theme="dark"] #hire-me-btn:hover {
+            background-color: #f0f0f0 !important;
+            color: #000000 !important;
+            border-color: #f0f0f0 !important;
+        }
+
+        [data-theme="dark"] .bg-white,
+        [data-theme="dark"] section.bg-white,
+        [data-theme="dark"] footer.bg-white {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] [class*="bg-white/"],
+        [data-theme="dark"] [class*="bg-\[#f9f7f4\]"],
+        [data-theme="dark"] [class*="bg-white"] {
+            background-color: #000000 !important;
+        }
+
+        [data-theme="dark"] .text-amber-800,
+        [data-theme="dark"] .text-amber-900,
+        [data-theme="dark"] .text-amber-950 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .text-amber-900\/80,
+        [data-theme="dark"] .text-amber-900\/70 {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+
+        [data-theme="dark"] .text-amber-900\/60 {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        [data-theme="dark"] .text-amber-800\/60 {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        [data-theme="dark"] .text-amber-600 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .bg-amber-800 {
+            background-color: #333333 !important;
+        }
+
+        [data-theme="dark"] .bg-amber-800\/10 {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        [data-theme="dark"] .bg-amber-900\/5 {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        [data-theme="dark"] .border-amber-900\/10 {
+            border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        [data-theme="dark"] .border-amber-900\/5 {
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        [data-theme="dark"] #id-card-inner {
+            border-color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        [data-theme="dark"] #id-card-inner .text-blue-600 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] #id-card-inner .text-blue-900\/40 {
+            color: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        [data-theme="dark"] #id-lace {
+            background: #000000 !important;
+        }
+
+        [data-theme="dark"] #id-lace .bg-gradient-to-r {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent, rgba(0, 0, 0, 0.3)) !important;
+        }
+
+        [data-theme="dark"] #id-lace {
+            background: #ffffff !important;
+        }
+
+
+        [data-theme="dark"] #id-card-inner .w-2.h-2.rounded-full.bg-blue-600\/20 {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        [data-theme="dark"] #id-card-inner .w-2.h-2.rounded-full.bg-blue-600\/40 {
+            background-color: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        [data-theme="dark"] #contact .bg-amber-800 {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+        }
+
+        [data-theme="dark"] #contact .bg-amber-800 i {
+            color: #000000 !important;
+        }
+
+        [data-theme="dark"] #contact .bg-amber-800:hover {
+            background-color: #f0f0f0 !important;
+        }
+
+        [data-theme="dark"] #contact .bg-amber-800 span {
+            color: #000000 !important;
+        }
+
+        [data-theme="dark"] .status-pulse {
+            background: #ffffff !important;
+            animation: status-blink-dark 2s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] #testimonials .text-amber-800\/20 {
+            color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        [data-theme="dark"] #testimonials .border-2.border-amber-800 {
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        [data-theme="dark"] .timeline-line {
+            background: linear-gradient(to bottom, transparent, #ffffff 10%, #ffffff 90%, transparent) !important;
+        }
+
+        [data-theme="dark"] .timeline-dot {
+            background: #ffffff !important;
+            border-color: #000000 !important;
+        }
+
+        [data-theme="dark"] .timeline-dot+div span {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        [data-theme="dark"] .timeline-dot+div h4 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .timeline-dot+div p {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        [data-theme="dark"] .holographic-overlay {
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.2) 45%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.1) 75%, transparent 100%);
+            background-color: #000000 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="page-loader">
+        <div class="loader-ring"></div>
+        <div class="loader-text">DevNJ</div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <div id="easter-egg-overlay">
+        <div class="ee-text">YOU FOUND ME! 🎉</div>
+    </div>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-[90] md:hidden"></div>
+
+    <div class="vignette"></div>
+    <nav class="fixed w-full z-50 p-6 animate-nav transition-all duration-500">
+        <div
+            class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl px-8 py-4 relative overflow-hidden">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-heading animate-gradient-text">DevNJ</span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="#home" class="nav-link hover:text-amber-800 transition">Home</a>
+                <a href="#about" class="nav-link hover:text-amber-800 transition">About</a>
+                <a href="#services" class="nav-link hover:text-amber-800 transition">Services</a>
+                <a href="#skills" class="nav-link hover:text-amber-800 transition">Skills</a>
+                <a href="#projects" class="nav-link hover:text-amber-800 transition">Projects</a>
+                <a href="#blog" class="nav-link hover:text-amber-800 transition">Blog</a>
+                <a href="#testimonials" class="nav-link hover:text-amber-800 transition">Testimonials</a>
+                <a href="#contact" class="nav-link hover:text-amber-800 transition">Contact</a>
+            </div>
+            <button id="sound-toggle" class="sound-btn theme-toggle-btn" aria-label="Toggle sound">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            <button id="menu-toggle" class="md:hidden text-2xl text-amber-900 focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="scroll-progress"
+                class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-amber-700 via-amber-900 to-black transition-all duration-150"
+                style="width: 0%"></div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu"
+        class="fixed top-0 right-0 h-full w-72 glass z-[100] p-10 flex flex-col space-y-8 md:hidden shadow-2xl border-l border-amber-900/10 transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1)">
+        <button id="menu-close" class="self-end text-2xl text-amber-900 mb-4"><i class="fas fa-times"></i></button>
+        <a href="#home" class="mobile-nav-link text-xl font-medium text-amber-900">Home</a>
+        <a href="#about" class="mobile-nav-link text-xl font-medium text-amber-900">About</a>
+        <a href="#services" class="mobile-nav-link text-xl font-medium text-amber-900">Services</a>
+        <a href="#skills" class="mobile-nav-link text-xl font-medium text-amber-900">Skills</a>
+        <a href="#projects" class="mobile-nav-link text-xl font-medium text-amber-900">Projects</a>
+        <a href="#blog" class="mobile-nav-link text-xl font-medium text-amber-900">Blog</a>
+        <a href="#testimonials" class="mobile-nav-link text-xl font-medium text-amber-900">Testimonials</a>
+        <a href="#contact" class="mobile-nav-link text-xl font-medium text-amber-900">Contact</a>
+    </div>
+
+    <button id="scroll-to-top"
+        class="magnetic-btn fixed bottom-8 right-8 z-[60] p-4 bg-amber-800 text-white rounded-full shadow-lg opacity-0 translate-y-10 pointer-events-none transition-all duration-300 hover:bg-amber-900 focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <section id="home"
+        class="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden bg-white">
+        <div class="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left order-2 md:order-1" data-aos="fade-right" data-aos-duration="1500">
+                <h2 class="text-5xl md:text-7xl font-heading text-amber-800 mb-4">Hello!</h2>
+                <h3 class="text-xl md:text-2xl font-light text-amber-900 mb-6">
+                    I'm <span class="font-bold text-amber-950">Nathaniel Jhann</span>, a <span id="typing-text"
+                        class="typing-cursor text-amber-800"></span>
+                </h3>
+                <p class="text-base text-amber-900/60 mb-8 max-w-md">
+                    Creating beautiful, minimalist digital experiences.
+                </p>
+                <a href="#contact" id="hire-me-btn"
+                    class="magnetic-btn relative overflow-hidden inline-block px-8 py-3 bg-amber-800 text-white rounded-xl font-semibold hover:bg-amber-900 transition-all shadow-md mb-4">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <span>Hire Me</span>
+                </a>
+            </div>
+
+            <div id="avatar-container"
+                class="w-full h-[400px] md:h-[550px] flex justify-center items-center relative hero-image-fade-in order-1 md:order-2">
+                <img src="https://i.pinimg.com/originals/3f/d5/0a/3fd50a92ee38232eedb90b5d4279e63f.gif" alt="Coding GIF"
+                    class="w-full h-full object-contain">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 px-6 relative overflow-hidden bg-[#f9f7f4]">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <div class="lg:col-span-2 glass rounded-3xl p-8 md:p-12 tilt-card relative overflow-hidden"
+                data-aos="fade-right">
+                <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+                    <div class="w-28 h-28 md:w-36 md:h-36 flex-shrink-0 rounded-2xl overflow-hidden border-2 border-amber-900/15 shadow-xl bg-gradient-to-br from-stone-100 to-stone-200 relative group"
+                        id="profile-image-container-about">
+                        <img src="front.png" alt="Profile Logo"
+                            class="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-100"
+                            id="profile-main-img">
+                        <img src="back.png" alt="Profile Hover"
+                            class="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-0"
+                            id="profile-hover-img">
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <h3 class="text-4xl md:text-5xl font-bold text-amber-950 font-heading leading-tight">Who am I?
+                        </h3>
+                    </div>
+                </div>
+
+                <p class="text-lg md:text-xl leading-relaxed text-amber-900/80 mb-8">
+                    I'm <span class="text-amber-700 font-semibold">Nathaniel Jhann Busto</span>,
+                    a builder kind of blending logic with creativity and honestly I treat code like a tool for sorting
+                    out problems not just writing lines. I like turning messy complicated issues into efficient software
+                    solutions in a sort of quiet iterative way. My adaptability is key though because the tech scene
+                    keeps shifting fast and I keep trying to pick up new frameworks and methodologies. What really
+                    drives me is creating noticeable user experiences and tools that make everyday life better. Even
+                    when the path feels unclear I still keep moving forward.
+                </p>
+
+                <div class="h-px bg-gradient-to-r from-transparent via-amber-900/20 to-transparent my-8"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-amber-900/80">
+                    <div class="space-y-2 p-4 rounded-xl bg-amber-900/5 border border-amber-900/5">
+                        <p class="text-[10px] uppercase font-bold opacity-60 tracking-widest">Personal Details</p>
+                        <p class="text-sm font-medium"><strong>Age:</strong> 20 • <strong>Gender:</strong> Male</p>
+                    </div>
+                    <div class="space-y-2 p-4 rounded-xl bg-amber-900/5 border border-amber-900/5">
+                        <p class="text-[10px] uppercase font-bold opacity-60 tracking-widest">College</p>
+                        <p class="text-sm font-semibold text-amber-900">University of Eastern Pangasinan</p>
+                        <p class="text-xs opacity-60 italic">B.S. Information Technology (2022 - 2026)</p>
+                    </div>
+                    <div class="space-y-2 p-4 rounded-xl bg-amber-900/5 border border-amber-900/5">
+                        <p class="text-[10px] uppercase font-bold opacity-60 tracking-widest">Senior High School</p>
+                        <p class="text-sm font-semibold text-amber-900">Math Excellence Academy of Binalonan</p>
+                        <p class="text-xs opacity-60">S.Y. 2020 - 2022</p>
+                    </div>
+                    <div class="space-y-2 p-4 rounded-xl bg-amber-900/5 border border-amber-900/5">
+                        <p class="text-[10px] uppercase font-bold opacity-60 tracking-widest">Junior High School</p>
+                        <p class="text-sm font-semibold text-amber-900">Math Excellence Academy of Binalonan</p>
+                        <p class="text-xs opacity-60">S.Y. 2016 - 2020</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mt-8">
+                    <span
+                        class="px-5 py-2.5 bg-amber-900/5 border border-amber-900/10 rounded-full text-sm font-medium text-amber-900/80 hover:bg-amber-900/10 transition-colors cursor-default">
+                        Web Performance</span>
+                    <span
+                        class="px-5 py-2.5 bg-amber-900/5 border border-amber-900/10 rounded-full text-sm font-medium text-amber-900/80 hover:bg-amber-900/10 transition-colors cursor-default">
+                        Responsive Design</span>
+                </div>
+                <div class="flex justify-center items-center mt-8">
+                    <img src="https://i.pinimg.com/originals/81/17/8b/81178b47a8598f0c81c4799f2cdd4057.gif"
+                        alt="Coding GIF" width="480" height="360" class="rounded-xl" />
+                </div>
+            </div>
+
+            <div id="id-container"
+                class="flex flex-col items-center lg:self-center cursor-grab active:cursor-grabbing animate-id-swing"
+                data-aos="fade-left">
+
+                <div id="id-lace"
+                    class="w-10 h-64 bg-[#1e3a8a] rounded-t-lg shadow-2xl relative z-0 flex justify-center overflow-hidden transition-all duration-500 ease-in-out">
+                    <div class="absolute inset-0 lace-texture opacity-20"></div>
+                    <div class="w-full h-full bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
+                </div>
+
+                <style>
+                    #id-lace {
+                        background: black !important;
+                    }
+                </style>
+
+                <div class="w-12 h-16 -mt-4 relative z-20 flex flex-col items-center">
+                    <div
+                        class="w-8 h-8 bg-gradient-to-b from-stone-400 via-stone-200 to-stone-400 rounded-full border-2 border-stone-500 shadow-lg flex items-center justify-center">
+                        <div class="w-2 h-2 bg-stone-600 rounded-full"></div>
+                    </div>
+                    <div
+                        class="w-4 h-8 bg-gradient-to-r from-stone-400 to-stone-200 border-x border-stone-500 shadow-md">
+                    </div>
+                    <div class="w-10 h-3 bg-stone-300 rounded-full border border-stone-400 -mt-1 shadow-sm"></div>
+                </div>
+
+                <div id="id-card-inner"
+                    class="w-full max-w-[320px] bg-white border-t-[15px] border-blue-600 rounded-2xl shadow-2xl tilt-card relative overflow-hidden mt-[-10px] p-0 border border-stone-200 preserve-3d transition-transform duration-500 ring-1 ring-black/5">
+
+                    <div class="holographic-overlay absolute inset-0 pointer-events-none z-30"></div>
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-40">
+                    </div>
+
+                    <div class="p-6 flex flex-col items-center text-center relative">
+                        <div class="absolute top-2 right-4 flex gap-1">
+                            <div class="w-2 h-2 rounded-full bg-blue-600/20"></div>
+                            <div class="w-2 h-2 rounded-full bg-blue-600/40"></div>
+                        </div>
+
+                        <div
+                            class="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden mb-4 bg-stone-100 relative z-10 group">
+                            <img id="id-photo-display" src="njb.png" alt="ID Photo" class="w-full h-full object-cover">
+                        </div>
+                        <input type="file" id="id-pic-upload" class="hidden" accept="image/*">
+
+                        <h4 class="text-stone-900 font-bold text-xl uppercase tracking-tight">Nathaniel Jhann</h4>
+                        <p class="text-blue-600 font-bold text-xs mb-4">Web Developer / Designer</p>
+
+                        <div class="w-full pt-4 border-t border-stone-200 flex justify-between items-end relative">
+
+                            <div
+                                class="absolute top-[-10px] right-4 font-heading italic text-blue-900/40 text-2xl -rotate-12 pointer-events-none select-none">
+                                N. Jhann
+                            </div>
+
+                            <div>
+                                <p class="text-[8px] uppercase font-bold text-stone-400">Issue Date</p>
+                                <p class="text-[10px] font-bold">JAN 2026</p>
+                            </div>
+
+                            <div class="flex flex-col items-end opacity-90">
+                                <div class="flex gap-[1px] h-8 items-end">
+                                    <div class="w-[2px] bg-black h-6"></div>
+                                    <div class="w-[1px] bg-black h-8"></div>
+                                    <div class="w-[3px] bg-black h-5"></div>
+                                    <div class="w-[1px] bg-black h-7"></div>
+                                    <div class="w-[2px] bg-black h-8"></div>
+                                    <div class="w-[4px] bg-black h-8"></div>
+                                    <div class="w-[1px] bg-black h-4"></div>
+                                </div>
+                                <span class="text-[7px] text-black font-mono mt-1 tracking-tighter">2024-05388</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="services" class="py-24 px-6 relative overflow-hidden bg-[#f9f7f4]">
+        <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+            <h3 class="text-3xl font-bold text-amber-900 mb-6 font-heading">My Services</h3>
+            <p class="text-lg text-amber-900/70 mb-12 max-w-2xl mx-auto">
+                I offer a range of services to help bring your digital ideas to life, focusing on clean code and
+                engaging user experiences.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="glass p-8 rounded-3xl space-y-4 text-left tilt-card relative overflow-hidden"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-amber-800/10 text-amber-900 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-amber-950 font-heading">Web Development</h4>
+                    <p class="text-amber-900/70">
+                        Crafting responsive and dynamic websites using modern frontend and backend technologies.
+                    </p>
+                    <ul class="list-disc list-inside text-amber-900/60 text-sm mt-4 space-y-1">
+                        <li>Custom Website Development</li>
+                        <li>Frontend & Backend Integration</li>
+                        <li>API Development</li>
+                    </ul>
+                </div>
+
+                <div class="glass p-8 rounded-3xl space-y-4 text-left tilt-card relative overflow-hidden"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-amber-800/10 text-amber-900 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-amber-950 font-heading">Performance Optimization</h4>
+                    <p class="text-amber-900/70">
+                        Enhancing website speed and efficiency for better user engagement and SEO.
+                    </p>
+                    <ul class="list-disc list-inside text-amber-900/60 text-sm mt-4 space-y-1">
+                        <li>Code Refactoring</li>
+                        <li>Image Optimization</li>
+                        <li>Caching Strategies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-24 px-6 bg-white">
+        <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+            <h3 class="text-3xl font-bold text-amber-900 mb-12 text-center font-heading">My Skills</h3>
+
+            <div class="skills-marquee">
+                <div class="marquee-row to-left">
+                    <div class="marquee-track">
+                        <div class="skill-icon"><i class="fab fa-html5 text-5xl text-[#E34F26]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-css3-alt text-5xl text-[#1572B6]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-js text-5xl text-[#F7DF1E]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-bootstrap text-5xl text-[#7952B3]"></i></div>
+                        <div class="skill-icon"><i class="fas fa-wind text-5xl text-[#06B6D4]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-react text-5xl text-[#61DAFB]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-php text-5xl text-[#777BB4]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-laravel text-5xl text-[#FF2D20]"></i></div>
+                        <div class="skill-icon"><i class="fas fa-database text-5xl text-[#4479A1]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-git-alt text-5xl text-[#F05032]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-github text-5xl text-[#181717]"></i></div>
+                        <div class="skill-icon"><i class="fas fa-code text-5xl text-[#007ACC]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-figma text-5xl text-[#F24E1E]"></i></div>
+                    </div>
+                    <div class="marquee-track">
+                        <div class="skill-icon"><i class="fab fa-html5 text-5xl text-[#E34F26]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-css3-alt text-5xl text-[#1572B6]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-js text-5xl text-[#F7DF1E]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-bootstrap text-5xl text-[#7952B3]"></i></div>
+                        <div class="skill-icon"><i class="fas fa-wind text-5xl text-[#06B6D4]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-react text-5xl text-[#61DAFB]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-php text-5xl text-[#777BB4]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-laravel text-5xl text-[#FF2D20]"></i></div>
+                        <div class="skill-icon"><i class="fas fa-database text-5xl text-[#4479A1]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-git-alt text-5xl text-[#F05032]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-github text-5xl text-[#181717]"></i></div>
+                        <div class="skill-icon"><i class="fas fa-code text-5xl text-[#007ACC]"></i></div>
+                        <div class="skill-icon"><i class="fab fa-figma text-5xl text-[#F24E1E]"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="py-24 px-6 bg-[#f9f7f4] relative overflow-hidden">
+        <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+            <h3 class="text-3xl font-bold text-amber-900 mb-12 text-center font-heading">My Journey</h3>
+            <div class="relative">
+                <div class="timeline-line"></div>
+
+                <div class="relative mb-12 md:flex items-center">
+                    <div class="timeline-dot" style="top:20px;"></div>
+                    <div
+                        class="md:w-1/2 md:pr-12 md:text-right glass rounded-2xl p-6 tilt-card relative overflow-hidden ml-8 md:ml-0">
+                        <div
+                            class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-800/60">2016 - 2020</span>
+                        <h4 class="text-lg font-bold text-amber-950 font-heading mt-1">Junior High School</h4>
+                        <p class="text-amber-900/70 text-sm mt-2">Math Excellence Academy of Binalonan — Where my love
+                            for logic and problem-solving began.</p>
+                    </div>
+                </div>
+
+                <div class="relative mb-12 md:flex items-center md:flex-row-reverse">
+                    <div class="timeline-dot" style="top:20px;"></div>
+                    <div
+                        class="md:w-1/2 md:pl-12 glass rounded-2xl p-6 tilt-card relative overflow-hidden ml-8 md:ml-0">
+                        <div
+                            class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-800/60">2020 - 2022</span>
+                        <h4 class="text-lg font-bold text-amber-950 font-heading mt-1">Senior High School</h4>
+                        <p class="text-amber-900/70 text-sm mt-2">Math Excellence Academy — Discovered web development
+                            and started building my first websites.</p>
+                    </div>
+                </div>
+
+                <div class="relative mb-12 md:flex items-center">
+                    <div class="timeline-dot" style="top:20px;"></div>
+                    <div
+                        class="md:w-1/2 md:pr-12 md:text-right glass rounded-2xl p-6 tilt-card relative overflow-hidden ml-8 md:ml-0">
+                        <div
+                            class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-800/60">2022 -
+                            Present</span>
+                        <h4 class="text-lg font-bold text-amber-950 font-heading mt-1">College — UEP</h4>
+                        <p class="text-amber-900/70 text-sm mt-2">University of Eastern Pangasinan — BS Information
+                            Technology. Building real projects and leveling up.</p>
+                    </div>
+                </div>
+
+                <div class="relative md:flex items-center md:flex-row-reverse">
+                    <div class="timeline-dot" style="top:20px;"></div>
+                    <div
+                        class="md:w-1/2 md:pl-12 glass rounded-2xl p-6 tilt-card relative overflow-hidden ml-8 md:ml-0">
+                        <div
+                            class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-800/60">2026</span>
+                        <h4 class="text-lg font-bold text-amber-950 font-heading mt-1">Portfolio Launch</h4>
+                        <p class="text-amber-900/70 text-sm mt-2">Launched this portfolio — showcasing my journey,
+                            skills, and projects to the world.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 px-6 bg-white">
+        <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+            <h3 class="text-3xl font-bold text-amber-900 mb-6 font-heading">Projects</h3>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="web">Web Apps</button>
+            </div>
+
+            <div id="project-grid" class="grid md:grid-cols-3 gap-8">
+
+                <a href="https://system-snowy-two.vercel.app" target="_blank"
+                    class="project-item group block polaroid-card transform transition hover:-rotate-2 hover:-translate-y-4 hover:shadow-2xl tilt-card relative overflow-hidden"
+                    data-category="web">
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    </div>
+                    <div class="relative h-56 overflow-hidden border border-gray-100">
+                        <img src="pis.png" alt="Product Inventory System Cover"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 project-img">
+                        <div
+                            class="absolute inset-0 bg-amber-900/10 group-hover:bg-amber-950/60 transition-colors duration-300">
+                        </div>
+                        <div
+                            class="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px]">
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[50ms]">HTML</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[150ms]">CSS</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[250ms]">JS</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h4 class="text-2xl font-handwriting text-amber-900">Product Inventory System</h4>
+                    </div>
+                </a>
+
+                <a href="https://uep-sims.vercel.app/login.html" target="_blank"
+                    class="project-item group block polaroid-card transform transition hover:rotate-2 hover:-translate-y-4 hover:shadow-2xl tilt-card relative overflow-hidden"
+                    data-category="web">
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    </div>
+                    <div class="relative h-56 overflow-hidden border border-gray-100">
+                        <img src="sims.png" alt="Student Information Management System Cover"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 project-img">
+                        <div
+                            class="absolute inset-0 bg-amber-900/10 group-hover:bg-amber-950/60 transition-colors duration-300">
+                        </div>
+                        <div
+                            class="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px]">
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[50ms]">HTML</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[150ms]">CSS</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[250ms]">JS</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h4 class="text-2xl font-handwriting text-amber-900">Student Information System</h4>
+                    </div>
+                </a>
+
+                <a href="https://sari-store-system.vercel.app/login.html" target="_blank"
+                    class="project-item group block polaroid-card transform transition hover:-rotate-1 hover:-translate-y-4 hover:shadow-2xl tilt-card relative overflow-hidden"
+                    data-category="web">
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    </div>
+                    <div class="relative h-56 overflow-hidden border border-gray-100">
+                        <img src="sss.png" alt="Sari Store System Cover"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 project-img">
+                        <div
+                            class="absolute inset-0 bg-amber-900/10 group-hover:bg-amber-950/60 transition-colors duration-300">
+                        </div>
+                        <div
+                            class="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px]">
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[50ms]">HTML</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[150ms]">CSS</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[250ms]">JS</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h4 class="text-2xl font-handwriting text-amber-900">Sari Store System</h4>
+                    </div>
+                </a>
+
+                <a href="https://pixel-pos-system.vercel.app/" target="_blank"
+                    class="project-item group block polaroid-card transform transition hover:rotate-1 hover:-translate-y-4 hover:shadow-2xl tilt-card relative overflow-hidden"
+                    data-category="web">
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    </div>
+                    <div class="relative h-56 overflow-hidden border border-gray-100">
+                        <img src="pps.png" alt="Pixel POS System Cover"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 project-img">
+                        <div
+                            class="absolute inset-0 bg-amber-900/10 group-hover:bg-amber-950/60 transition-colors duration-300">
+                        </div>
+                        <div
+                            class="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px]">
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[50ms]">HTML</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[150ms]">CSS</span>
+                            <span
+                                class="px-2 py-1 bg-white/20 border border-white/30 rounded text-[10px] text-white font-bold uppercase tracking-wider translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[250ms]">JS</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h4 class="text-2xl font-handwriting text-amber-900">Pixel POS System</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="py-24 px-6 bg-[#f9f7f4]">
+        <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+            <h3 class="text-3xl font-bold text-amber-900 mb-6 font-heading">My Blog</h3>
+            <p class="text-lg text-amber-900/70 mb-12 max-w-2xl mx-auto">
+                Sharing insights, tutorials, and thoughts on web development, design, and technology.
+            </p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass p-6 rounded-3xl text-left flex flex-col tilt-card relative overflow-hidden"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <img src="@rt.png" alt="Blog Post Image" class="rounded-xl mb-4 object-cover h-48 w-full">
+                    <h4 class="text-xl font-bold text-amber-950 font-heading mb-2">The Art of Minimalist Design</h4>
+                    <p class="text-amber-900/70 text-sm flex-grow">
+                        Explore how less can be more in web design, focusing on clarity and user experience.
+                    </p>
+                    <a href="#" onclick="openBlogModal(0); return false;"
+                        class="mt-4 inline-block text-amber-800 hover:underline font-medium cursor-pointer">Read More <i
+                            class="fas fa-arrow-right text-xs ml-1"></i></a>
+                </div>
+                <div class="glass p-6 rounded-3xl text-left flex flex-col tilt-card relative overflow-hidden"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <img src="tailwind.png" alt="Mastering Tailwind CSS"
+                        class="rounded-xl mb-4 object-cover h-48 w-full">
+                    <h4 class="text-xl font-bold text-amber-950 font-heading mb-2">Mastering Tailwind CSS for Rapid
+                        Development</h4>
+                    <p class="text-amber-900/70 text-sm flex-grow">
+                        A deep dive into utility-first CSS frameworks and how they boost productivity.
+                    </p>
+                    <a href="#" onclick="openBlogModal(1); return false;"
+                        class="mt-4 inline-block text-amber-800 hover:underline font-medium cursor-pointer">Read More <i
+                            class="fas fa-arrow-right text-xs ml-1"></i></a>
+                </div>
+                <div class="glass p-6 rounded-3xl text-left flex flex-col tilt-card relative overflow-hidden"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <img src="ai.png" alt="AI and Web Development" class="rounded-xl mb-4 object-cover h-48 w-full">
+                    <h4 class="text-xl font-bold text-amber-950 font-heading mb-2">The Future of Web Development: AI &
+                        Beyond</h4>
+                    <p class="text-amber-900/70 text-sm flex-grow">
+                        Discussing emerging trends and the impact of artificial intelligence on web technologies.
+                    </p>
+                    <a href="#" onclick="openBlogModal(2); return false;"
+                        class="mt-4 inline-block text-amber-800 hover:underline font-medium cursor-pointer">Read More <i
+                            class="fas fa-arrow-right text-xs ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-24 px-6 bg-white">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+            <h3 class="text-3xl font-bold text-amber-900 mb-6 font-heading">What Clients Say</h3>
+            <p class="text-lg text-amber-900/70 mb-12 max-w-2xl mx-auto">
+                Hear directly from those I've had the pleasure of working with.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-3xl text-left relative tilt-card overflow-hidden" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    </div>
+                    <i class="fas fa-quote-left text-amber-800/20 text-5xl absolute top-6 left-6"></i>
+                    <p class="text-amber-900/80 italic mb-6 relative z-10">
+                        "Nathaniel delivered an outstanding website that perfectly captured our brand's essence. His
+                        attention to detail and communication were exceptional."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.pravatar.cc/150?img=47" alt="Jane Doe"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-amber-800">
+                        <div>
+                            <p class="font-bold text-amber-950">Jane Doe</p>
+                            <p class="text-amber-900/60 text-sm">CEO, Creative Solutions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-3xl text-left relative tilt-card overflow-hidden" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div
+                        class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    </div>
+                    <i class="fas fa-quote-left text-amber-800/20 text-5xl absolute top-6 left-6"></i>
+                    <p class="text-amber-900/80 italic mb-6 relative z-10">
+                        "Working with Nathaniel was a breeze. He's highly skilled, professional, and brought our vision
+                        to life with remarkable precision and creativity."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.pravatar.cc/150?img=12" alt="Alex Smith"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-amber-800">
+                        <div>
+                            <p class="font-bold text-amber-950">Alex Smith</p>
+                            <p class="text-amber-900/60 text-sm">Founder, Tech Innovators</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 px-6 bg-[#f9f7f4]">
+        <div class="max-w-5xl mx-auto" data-aos="fade-up">
+            <div class="text-center mb-12">
+                <h3 class="text-4xl font-bold text-amber-950 mb-4 font-heading">Get In Touch</h3>
+                <p class="text-amber-900/70">Have a project in mind? Let's build something beautiful together.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div class="glass p-8 rounded-3xl space-y-8 scrap-paper tilt-card relative overflow-hidden">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <a href="mailto:nathanielbusto3@gmail.com"
+                        class="flex items-center gap-6 group/contact transition-transform hover:translate-x-2">
+                        <div
+                            class="w-14 h-14 bg-amber-800 text-white rounded-2xl flex items-center justify-center shadow-lg group-hover/contact:bg-amber-900 transition-colors">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-amber-950">Email Me</h4>
+                            <p class="text-amber-900/70 text-sm">nathanielbusto3@gmail.com</p>
+                        </div>
+                    </a>
+                    <a href="https://www.facebook.com/nathaniel.jhann" target="_blank"
+                        class="flex items-center gap-6 group/contact transition-transform hover:translate-x-2">
+                        <div
+                            class="w-14 h-14 bg-amber-800 text-white rounded-2xl flex items-center justify-center shadow-lg group-hover/contact:bg-amber-900 transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-amber-950">Message Me</h4>
+                            <p class="text-amber-900/70 text-sm">Nathaniel Jhann Busto</p>
+                        </div>
+                    </a>
+                    <button onclick="showToast('Resume download coming soon!')"
+                        class="magnetic-btn flex items-center gap-4 w-full p-4 bg-amber-800 text-white rounded-2xl font-bold hover:bg-amber-900 transition-all shadow-lg active:scale-95">
+                        <i class="fas fa-download text-xl"></i>
+                        <span>Download Resume</span>
+                    </button>
+
+                    <div class="flex items-center gap-4 p-4 bg-white/30 rounded-2xl border border-amber-900/10">
+                        <div class="status-pulse"></div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-amber-800/60">Currently
+                                Working On</span>
+                            <p class="text-amber-900 font-semibold text-sm">Expanding this portfolio with new features
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="contact-form"
+                    class="glass p-8 rounded-3xl space-y-4 scrap-paper tilt-card relative min-h-[400px] flex flex-col justify-center overflow-hidden">
+                    <div class="glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300">
+                    </div>
+                    <div id="form-content" class="space-y-4">
+                        <div>
+                            <input id="form-name" type="text" required placeholder="Your Name"
+                                class="form-input w-full px-5 py-4 bg-white/50 border border-amber-900/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-800/20 transition-all placeholder:text-amber-900/40">
+                            <div class="validation-msg text-red-500" data-for="form-name"></div>
+                        </div>
+                        <div>
+                            <input id="form-email" type="email" required placeholder="Your Email"
+                                class="form-input w-full px-5 py-4 bg-white/50 border border-amber-900/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-800/20 transition-all placeholder:text-amber-900/40">
+                            <div class="validation-msg text-red-500" data-for="form-email"></div>
+                        </div>
+                        <div>
+                            <textarea id="form-message" required placeholder="Your Message" rows="4"
+                                class="form-input w-full px-5 py-4 bg-white/50 border border-amber-900/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-800/20 transition-all placeholder:text-amber-900/40"></textarea>
+                            <div class="validation-msg text-red-500" data-for="form-message"></div>
+                        </div>
+                        <button type="submit"
+                            class="magnetic-btn w-full py-4 bg-amber-800 text-white rounded-xl font-bold hover:bg-amber-900 transition-all shadow-lg active:scale-95">
+                            Send Message
+                        </button>
+                    </div>
+
+                    <div id="success-message" class="text-center space-y-4">
+                        <div
+                            class="success-stamp inline-block px-6 py-2 rounded-lg text-4xl uppercase font-black tracking-widest mb-4">
+                            Received</div>
+                        <h4 class="text-2xl font-heading text-amber-950">Thank you!</h4>
+                        <p class="text-amber-900/70">Your message has been delivered to my archives. I'll get back to
+                            you soon.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-amber-900/50 text-sm bg-white border-t border-gray-100">
+        &copy; 2026 Crafted by DevNJ. All rights reserved.
+    </footer>
+
+    <script>
+
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+        const scrollProgress = document.getElementById('scroll-progress');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const heroPic = document.getElementById('avatar-container');
+
+        const sectionProgressColors = {
+            'home': 'linear-gradient(to right, #8d6e63, #5d4037)',
+            'about': 'linear-gradient(to right, #2563eb, #1e40af)',
+            'skills': 'linear-gradient(to right, #d97706, #b45309)',
+            'services': 'linear-gradient(to right, #d4a574, #8d6e63)',
+            'projects': 'linear-gradient(to right, #059669, #047857)',
+            'blog': 'linear-gradient(to right, #a1887f, #5d4037)',
+            'testimonials': 'linear-gradient(to right, #b8860b, #8d6e63)',
+            'contact': 'linear-gradient(to right, #7c3aed, #6d28d9)'
+        };
+
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true,
+            easing: 'ease-out-quad'
+        });
+
+        const bgObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const section = entry.target;
+
+                    const bgColor = window.getComputedStyle(section).backgroundColor;
+                    if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+                        document.body.style.backgroundColor = bgColor;
+
+                        updateHeaderBackground();
+                    }
+                }
+            });
+        }, { threshold: 0.4 });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            const navDiv = document.querySelector('nav div');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+                navDiv.classList.add('shadow-xl');
+            } else {
+                nav.classList.remove('scrolled');
+                navDiv.classList.remove('shadow-xl');
+            }
+        });
+
+        window.dispatchEvent(new Event('scroll'));
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        const toggleMenu = () => {
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        };
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuClose.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        const typingText = document.getElementById('typing-text');
+        const phrases = ['Developer.', 'Designer.', 'Student.', 'Creative Thinker.'];
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIdx];
+
+            if (isDeleting) {
+                typingText.textContent = currentPhrase.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                typingText.textContent = currentPhrase.substring(0, charIdx + 1);
+                charIdx++;
+            }
+
+            let speed = isDeleting ? 100 : 150;
+
+            if (!isDeleting && charIdx === currentPhrase.length) {
+                isDeleting = true;
+                speed = 4000;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                speed = 500;
+            }
+
+            setTimeout(type, speed);
+        }
+        type();
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        let lastScrollTop = 0;
+        let scrollVelocity = 0;
+        let scrollTimeout;
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        window.addEventListener('scroll', () => {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            const scrolled = st;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrolled / height) * 100;
+
+            scrollVelocity = st - lastScrollTop;
+            lastScrollTop = st <= 0 ? 0 : st;
+
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                scrollVelocity = 0;
+            }, 100);
+
+            const tearOffset = (scrolled % 100);
+            document.documentElement.style.setProperty('--tear-1', `${40 + (Math.sin(scrolled / 50) * 10)}%`);
+            document.documentElement.style.setProperty('--tear-2', `${50 + (Math.cos(scrolled / 60) * 15)}%`);
+            document.documentElement.style.setProperty('--tear-3', `${30 + (Math.sin(scrolled / 70) * 8)}%`);
+            document.documentElement.style.setProperty('--tear-4', `${60 + (Math.cos(scrolled / 80) * 12)}%`);
+
+            if (scrollProgress) scrollProgress.style.width = scrollPercent + '%';
+
+            if (scrolled > 400) {
+                scrollToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }
+
+            document.querySelectorAll('.parallax-bg').forEach(el => {
+                const speed = parseFloat(el.getAttribute('data-speed'));
+                el.style.transform = `translate(${scrolled * speed * 0.2}px, ${scrolled * speed}px)`;
+            });
+
+            if (heroPic) {
+                heroPic.style.transform = `scale(${1 + scrolled * 0.0001}) translateY(${scrolled * 0.05}px)`;
+            }
+
+        });
+
+        const cursor = document.createElement('div');
+        cursor.className = 'custom-cursor';
+        document.body.appendChild(cursor);
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+            trail.style.left = `${e.clientX}px`;
+            trail.style.top = `${e.clientY}px`;
+            document.body.appendChild(trail);
+
+            setTimeout(() => {
+                trail.style.transform = 'translate(-50%, -50%) scale(0.1)';
+                trail.style.opacity = '0';
+                setTimeout(() => {
+                    trail.remove();
+                }, 200);
+            }, 50);
+        });
+
+        const links = document.querySelectorAll('a, button, .cursor-pointer');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+
+        const hireMeBtn = document.getElementById('hire-me-btn');
+        if (hireMeBtn) {
+            const glare = hireMeBtn.querySelector('.glare');
+            hireMeBtn.addEventListener('mousemove', e => {
+                const rect = hireMeBtn.getBoundingClientRect();
+                if (glare) {
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    glare.style.opacity = '1';
+                    glare.style.setProperty('--x', `${x}px`);
+                    glare.style.setProperty('--y', `${y}px`);
+                }
+            });
+            hireMeBtn.addEventListener('mouseleave', () => {
+                if (glare) glare.style.opacity = '0';
+            });
+        }
+
+        function createCoffeeSplash(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'coffee-particle';
+                const tx = (Math.random() - 0.5) * 250;
+                const ty = (Math.random() - 0.5) * 250 - 50;
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+        }
+
+        const picUpload = document.getElementById('id-pic-upload');
+        const idPhoto = document.getElementById('id-photo-display');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('id-profile-pic');
+            if (savedPic) {
+                idPhoto.src = savedPic;
+            }
+        });
+
+        const profileImageContainer = document.getElementById('profile-image-container-about');
+        const profileMainImg = document.getElementById('profile-main-img');
+        const profileHoverImg = document.getElementById('profile-hover-img');
+
+        if (profileImageContainer && profileMainImg && profileHoverImg) {
+            profileImageContainer.addEventListener('mouseenter', () => {
+                profileMainImg.style.opacity = '0';
+                profileHoverImg.style.opacity = '1';
+            });
+
+            profileImageContainer.addEventListener('mouseleave', () => {
+                profileMainImg.style.opacity = '1';
+                profileHoverImg.style.opacity = '0';
+            });
+        }
+
+        picUpload.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imageData = e.target.result;
+                    idPhoto.src = imageData;
+                    localStorage.setItem('id-profile-pic', imageData);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        const contactForm = document.getElementById('contact-form');
+        const formContent = document.getElementById('form-content');
+        const successMessage = document.getElementById('success-message');
+        const stamp = document.querySelector('.success-stamp');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            formContent.style.opacity = '0';
+            setTimeout(() => {
+                formContent.style.display = 'none';
+                successMessage.style.display = 'block';
+                setTimeout(() => stamp.classList.add('show'), 100);
+            }, 300);
+        });
+
+    </script>
+
+    <div id="blogModal" class="fixed inset-0 z-[9999] hidden items-center justify-center"
+        onclick="if(event.target===this) closeBlogModal();">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div
+            class="modal-content-box relative bg-[#FDFAF5] rounded-3xl shadow-2xl max-w-2xl w-full mx-4 max-h-[85vh] overflow-y-auto p-8 animate-fadeIn">
+            <button onclick="closeBlogModal()"
+                class="modal-close-btn absolute top-4 right-4 text-amber-900 hover:text-amber-600 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full hover:bg-amber-100 transition cursor-pointer">&times;</button>
+            <img id="blogModalImg" src="" alt="" class="rounded-xl w-full h-56 object-cover mb-6">
+            <h3 id="blogModalTitle" class="text-2xl font-bold text-amber-950 font-heading mb-2"></h3>
+            <p id="blogModalMeta" class="text-sm text-amber-700 mb-4"></p>
+            <div id="blogModalContent" class="text-amber-900/80 leading-relaxed space-y-4"></div>
+        </div>
+    </div>
+
+    <script>
+        const blogPosts = [
+            {
+                title: "The Art of Minimalist Design",
+                img: "@rt.png",
+                meta: "June 10, 2026 · 5 min read",
+                content: [
+                    "Minimalist design is more than an aesthetic — it's a philosophy. By stripping away unnecessary elements, we allow users to focus on what truly matters: the content and the experience.",
+                    "In web design, minimalism means clean layouts, ample white space, and a limited color palette. These choices reduce cognitive load and make navigation intuitive.",
+                    "Key principles include: using a clear visual hierarchy, choosing typography deliberately, and ensuring every element serves a purpose. Decoration for its own sake is the enemy of minimalism.",
+                    "Tools like Tailwind CSS make it easy to build minimalist interfaces quickly, with utility classes that encourage restraint and consistency.",
+                    "Ultimately, minimalist design is about respect — respect for the user's time, attention, and intelligence. When done right, it creates experiences that feel effortless and elegant."
+                ]
+            },
+            {
+                title: "Mastering Tailwind CSS for Rapid Development",
+                img: "tailwind.png",
+                meta: "May 22, 2026 · 7 min read",
+                content: [
+                    "Tailwind CSS has revolutionized how developers build user interfaces. Instead of writing custom CSS files, you compose designs directly in your HTML using pre-built utility classes.",
+                    "The utility-first approach may feel unusual at first, but it dramatically speeds up development. No more context-switching between HTML and CSS files, no more unused styles cluttering your codebase.",
+                    "Tailwind's configuration system lets you define your design tokens — colors, spacing, fonts — in one place, ensuring consistency across your entire project.",
+                    "Responsive design is built in. With simple prefixes like 'md:' and 'lg:', you can create layouts that adapt beautifully to any screen size without writing a single media query manually.",
+                    "Combined with component frameworks like React or Vue, Tailwind becomes a powerhouse for rapid, maintainable UI development. It's no surprise it has become a staple in modern web development."
+                ]
+            },
+            {
+                title: "The Future of Web Development: AI & Beyond",
+                img: "ai.png",
+                meta: "April 15, 2026 · 6 min read",
+                content: [
+                    "Artificial intelligence is reshaping every corner of technology, and web development is no exception. From code generation to design automation, AI tools are becoming indispensable partners for developers.",
+                    "AI-powered assistants can now write boilerplate code, suggest optimizations, and even generate entire UI components from a text description. This doesn't replace developers — it amplifies their capabilities.",
+                    "Beyond code, AI is transforming user experiences. Personalized content, intelligent search, and adaptive interfaces are becoming standard expectations, not luxuries.",
+                    "WebAssembly, edge computing, and progressive web apps are also pushing the boundaries of what's possible in the browser, making web apps faster and more capable than ever.",
+                    "The developers who thrive in this new era will be those who embrace AI as a collaborator, stay curious about emerging technologies, and never lose sight of the human at the other end of the screen."
+                ]
+            }
+        ];
+
+        function openBlogModal(index) {
+            const post = blogPosts[index];
+            document.getElementById('blogModalImg').src = post.img;
+            document.getElementById('blogModalImg').alt = post.title;
+            document.getElementById('blogModalTitle').textContent = post.title;
+            document.getElementById('blogModalMeta').textContent = post.meta;
+            const contentDiv = document.getElementById('blogModalContent');
+            contentDiv.innerHTML = post.content.map(p => '<p>' + p + '</p>').join('');
+            const modal = document.getElementById('blogModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBlogModal() {
+            const modal = document.getElementById('blogModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBlogModal();
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('page-loader').classList.add('loaded');
+            }, 800);
+        });
+
+        (function () {
+            const stats = document.querySelectorAll('.stat-number');
+            let countAnimation = null;
+            function resetCounters() {
+                stats.forEach(stat => {
+                    stat.textContent = '0';
+                });
+            }
+            function animateCounters() {
+                if (countAnimation) cancelAnimationFrame(countAnimation);
+                resetCounters();
+                stats.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-target'));
+                    const duration = 2000;
+                    const start = performance.now();
+                    function update(now) {
+                        const elapsed = now - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        stat.textContent = Math.round(target * eased);
+                        if (progress < 1) countAnimation = requestAnimationFrame(update);
+                        else stat.textContent = target + (target === 100 ? '' : '+');
+                    }
+                    countAnimation = requestAnimationFrame(update);
+                });
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                    } else {
+                        if (countAnimation) cancelAnimationFrame(countAnimation);
+                        resetCounters();
+                    }
+                });
+            }, { threshold: 0.3 });
+            const statsSection = document.getElementById('stats');
+            if (statsSection) observer.observe(statsSection);
+        })();
+
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        (function () {
+            const headings = document.querySelectorAll('h3.font-heading, h2.font-heading');
+            headings.forEach(h => {
+                h.classList.add('text-reveal');
+                const text = h.textContent;
+                h.innerHTML = '<span>' + text + '</span>';
+            });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.text-reveal').forEach(el => observer.observe(el));
+        })();
+
+        (function () {
+            const tabs = document.querySelectorAll('.filter-tab');
+            const items = document.querySelectorAll('.project-item');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const filter = tab.getAttribute('data-filter');
+                    items.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = '';
+                            item.style.opacity = '1';
+                            item.style.transform = '';
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => { item.style.display = 'none'; }, 300);
+                        }
+                    });
+                });
+            });
+        })();
+
+        document.getElementById('scroll-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        (function () {
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('blur', () => {
+                    const msgEl = document.querySelector(`.validation-msg[data-for="${input.id}"]`);
+                    if (!input.value.trim()) {
+                        input.classList.add('input-error');
+                        input.classList.remove('input-success');
+                        if (msgEl) msgEl.textContent = 'This field is required';
+                    } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+                        input.classList.add('input-error');
+                        input.classList.remove('input-success');
+                        if (msgEl) msgEl.textContent = 'Please enter a valid email';
+                    } else {
+                        input.classList.remove('input-error');
+                        input.classList.add('input-success');
+                        if (msgEl) msgEl.textContent = '';
+                    }
+                });
+                input.addEventListener('input', () => {
+                    const msgEl = document.querySelector(`.validation-msg[data-for="${input.id}"]`);
+                    if (msgEl) msgEl.textContent = '';
+                    input.classList.remove('input-error', 'input-success');
+                });
+            });
+        })();
+
+        function showToast(message, duration = 3000) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            container.appendChild(toast);
+            requestAnimationFrame(() => { toast.classList.add('show'); });
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, duration);
+        }
+
+        (function () {
+            const sections = ['home', 'about', 'stats', 'services', 'skills', 'timeline', 'projects', 'blog', 'testimonials', 'contact'];
+            let currentSectionIndex = 0;
+            document.addEventListener('keydown', (e) => {
+
+                if (e.key === 'd' || e.key === 'D') {
+                    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                        document.getElementById('theme-toggle').click();
+                        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                        showToast(isDark ? 'Dark mode enabled' : 'Light mode enabled');
+                    }
+                }
+
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                        e.preventDefault();
+                        if (e.key === 'ArrowDown') currentSectionIndex = Math.min(currentSectionIndex + 1, sections.length - 1);
+                        else currentSectionIndex = Math.max(currentSectionIndex - 1, 0);
+                        const target = document.getElementById(sections[currentSectionIndex]);
+                        if (target) target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        })();
+
+        (function () {
+            window.soundEnabled = false;
+            const btn = document.getElementById('sound-toggle');
+            if (!btn) return;
+            const icon = btn.querySelector('i');
+
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            let audioCtx;
+            function playTone(freq, dur) {
+                if (!window.soundEnabled) return;
+                if (!audioCtx) audioCtx = new AudioCtx();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.value = freq;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+                osc.start();
+                osc.stop(audioCtx.currentTime + dur);
+            }
+            btn.addEventListener('click', () => {
+                window.soundEnabled = !window.soundEnabled;
+                icon.className = window.soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+                showToast(window.soundEnabled ? 'Sound enabled' : 'Sound muted');
+                if (window.soundEnabled) playTone(800, 0.1);
+            });
+
+            document.querySelectorAll('.nav-link, .filter-tab, a').forEach(el => {
+                el.addEventListener('mouseenter', () => playTone(600, 0.05));
+                el.addEventListener('click', () => playTone(800, 0.08));
+            });
+        })();
+
+        (function () {
+            const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+            let pos = 0;
+            document.addEventListener('keydown', (e) => {
+                if (e.key === konami[pos]) {
+                    pos++;
+                    if (pos === konami.length) {
+                        pos = 0;
+                        const overlay = document.getElementById('easter-egg-overlay');
+                        overlay.classList.add('active');
+                        showToast('🎮 Konami Code Activated! You found the easter egg!');
+
+                        for (let i = 0; i < 50; i++) {
+                            const confetti = document.createElement('div');
+                            confetti.style.cssText = `position:fixed;width:8px;height:8px;border-radius:50%;z-index:999999;pointer-events:none;top:-10px;left:${Math.random() * 100}%;background:hsl(${Math.random() * 360},80%,60%);animation:confetti-fall ${2 + Math.random() * 2}s linear forwards;`;
+                            document.body.appendChild(confetti);
+                            setTimeout(() => confetti.remove(), 4000);
+                        }
+
+                        if (!document.getElementById('confetti-style')) {
+                            const style = document.createElement('style');
+                            style.id = 'confetti-style';
+                            style.textContent = '@keyframes confetti-fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }';
+                            document.head.appendChild(style);
+                        }
+                        setTimeout(() => overlay.classList.remove('active'), 3000);
+                    }
+                } else {
+                    pos = (e.key === konami[0]) ? 1 : 0;
+                }
+            });
+        })();
+
+        (function () {
+            let touchStartY = 0;
+            const sections = ['home', 'about', 'stats', 'services', 'skills', 'timeline', 'projects', 'blog', 'testimonials', 'contact'];
+            let currentIdx = 0;
+            document.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+            document.addEventListener('touchend', (e) => {
+                const diff = touchStartY - e.changedTouches[0].clientY;
+                if (Math.abs(diff) > 80) {
+
+                    const scrollY = window.scrollY + window.innerHeight / 2;
+                    for (let i = 0; i < sections.length; i++) {
+                        const el = document.getElementById(sections[i]);
+                        if (el && el.offsetTop <= scrollY && el.offsetTop + el.offsetHeight > scrollY) {
+                            currentIdx = i; break;
+                        }
+                    }
+                    if (diff > 0) currentIdx = Math.min(currentIdx + 1, sections.length - 1);
+                    else currentIdx = Math.max(currentIdx - 1, 0);
+                    const target = document.getElementById(sections[currentIdx]);
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, { passive: true });
+        })();
+
+        if ('ontouchstart' in window) {
+            document.addEventListener('touchstart', (e) => {
+                const pulse = document.createElement('div');
+                pulse.className = 'tap-pulse';
+                pulse.style.left = e.touches[0].clientX + 'px';
+                pulse.style.top = e.touches[0].clientY + 'px';
+                document.body.appendChild(pulse);
+                setTimeout(() => pulse.remove(), 600);
+            }, { passive: true });
+        }
+
+        (function () {
+            const sections = ['home', 'about', 'stats', 'services', 'skills', 'timeline', 'projects', 'blog', 'testimonials', 'contact'];
+            const navLinks = document.querySelectorAll('.nav-link');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY + window.innerHeight / 2;
+                sections.forEach((id, i) => {
+                    const el = document.getElementById(id);
+                    if (el && el.offsetTop <= scrollY && el.offsetTop + el.offsetHeight > scrollY) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        const active = document.querySelector(`.nav-link[href="#${id}"]`);
+                        if (active) active.classList.add('active');
+                    }
+                });
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
